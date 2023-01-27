@@ -9,15 +9,17 @@ import Signup from './pages/Signup';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [json, setJson] = useState('');
 
   useEffect(() => {
     console.log("logged in:", loggedIn);
-  }, [loggedIn])
+    console.log("json:", json);
+  }, [loggedIn, json])
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Navbar setLoggedIn={setLoggedIn} setJson={setJson} loggedIn={loggedIn} />
         <div className="pages">
           <Routes>
             <Route
@@ -26,11 +28,11 @@ function App() {
             />
             <Route
               path="/login"
-              element={<Login />}
+              element={<Login setLoggedIn={setLoggedIn} setJson={setJson} />}
             />
             <Route
               path="/signup"
-              element={<Signup />}
+              element={<Signup setLoggedIn={setLoggedIn} setJson={setJson} />}
             />
           </Routes>
         </div>
