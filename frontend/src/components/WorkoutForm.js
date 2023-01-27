@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const WorkoutForm = ({workouts, setWorkouts}) => {
+const WorkoutForm = ({ workouts, setWorkouts, user }) => {
     const [title, setTitle] = useState('');
     const [load, setLoad] = useState('');
     const [reps, setReps] = useState('');
@@ -10,13 +10,19 @@ const WorkoutForm = ({workouts, setWorkouts}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!user) {
+            setError('You must be logged in');
+            return
+        }
+
         const workout = { title, load, reps };
 
         const response = await fetch('/api/workouts', {
             method: 'POST',
             body: JSON.stringify(workout),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
 

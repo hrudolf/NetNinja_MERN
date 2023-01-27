@@ -7,8 +7,6 @@ const Navbar = ({ setLoggedIn, setJson, loggedIn, json }) => {
         logout();
     }
 
-    console.log(json);
-
     return (
         <header>
             <div className="container">

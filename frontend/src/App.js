@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 
 // pages & components
@@ -19,10 +19,10 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
+/*   useEffect(() => {
     console.log("logged in:", loggedIn);
     console.log("json:", json);
-  }, [loggedIn, json])
+  }, [loggedIn, json]) */
 
   return (
     <div className="App">
@@ -32,15 +32,15 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Home />}
+              element={json ? <Home user={json} /> : <Navigate to="/login" />}
             />
             <Route
               path="/login"
-              element={<Login setLoggedIn={setLoggedIn} setJson={setJson} />}
+              element={!json ? <Login setLoggedIn={setLoggedIn} setJson={setJson} /> : <Navigate to="/" />}
             />
             <Route
               path="/signup"
-              element={<Signup setLoggedIn={setLoggedIn} setJson={setJson} />}
+              element={!json ? <Signup setLoggedIn={setLoggedIn} setJson={setJson} /> : <Navigate to="/" />}
             />
           </Routes>
         </div>

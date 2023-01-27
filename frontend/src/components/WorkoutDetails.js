@@ -1,9 +1,16 @@
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-const WorkoutDetails = ({ workout, workouts, setWorkouts }) => {
+const WorkoutDetails = ({ workout, workouts, setWorkouts, user }) => {
     const handleClick = async () => {
+        if (!user) {
+            return
+        }
+
         const response = await fetch(`/api/workouts/${workout._id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         await response.json();
         if (response.ok) {

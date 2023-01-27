@@ -4,12 +4,16 @@ import { useEffect, useState } from "react";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
-const Home = () => {
+const Home = ({ user }) => {
     const [workouts, setWorkouts] = useState(null);
 
     useEffect(() => {
         const fetchWorkouts = async () => {
-            const response = await fetch('/api/workouts')
+            const response = await fetch('/api/workouts', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             const json = await response.json();
 
             if (response.ok) {
@@ -17,17 +21,19 @@ const Home = () => {
             }
         }
 
-        fetchWorkouts()
+        if (user) {
+            fetchWorkouts()
+        }
     }, [])
 
     return (
         <div className="home">
             <div className="workouts">
                 {workouts && workouts.map(workout => (
-                    <WorkoutDetails key={workout._id} workout={workout} workouts={workouts} setWorkouts={setWorkouts} />
+                    <WorkoutDetails key={workout._id} workout={workout} workouts={workouts} setWorkouts={setWorkouts} user={user} />
                 ))}
             </div>
-            <WorkoutForm workouts={workouts} setWorkouts={setWorkouts} />
+            <WorkoutForm workouts={workouts} setWorkouts={setWorkouts} user={user} />
         </div>
     );
 }
