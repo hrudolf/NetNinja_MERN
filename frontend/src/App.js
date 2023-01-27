@@ -12,6 +12,14 @@ function App() {
   const [json, setJson] = useState('');
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setLoggedIn(true);
+      setJson(user);
+    }
+  }, [])
+
+  useEffect(() => {
     console.log("logged in:", loggedIn);
     console.log("json:", json);
   }, [loggedIn, json])
@@ -19,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar setLoggedIn={setLoggedIn} setJson={setJson} loggedIn={loggedIn} />
+        <Navbar setLoggedIn={setLoggedIn} setJson={setJson} loggedIn={loggedIn} json={json} />
         <div className="pages">
           <Routes>
             <Route

@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-const useSignup = ({ setLoggedIn, setJson }) => {
+const useLogin = ({ setLoggedIn, setJson }) => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
 
-    const signup = async (email, password) => {
+    const login = async (email, password) => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch('api/user/signup', {
+        const response = await fetch('api/user/login', {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -32,7 +32,7 @@ const useSignup = ({ setLoggedIn, setJson }) => {
         }
     }
 
-    return { signup, isLoading, error }
+    return { login, isLoading, error }
 }
 
-export default useSignup;
+export default useLogin;

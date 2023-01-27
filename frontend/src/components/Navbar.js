@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import useLogout from '../hooks/useLogout';
 
-const Navbar = ({ setLoggedIn, setJson, loggedIn }) => {
+const Navbar = ({ setLoggedIn, setJson, loggedIn, json }) => {
     const { logout } = useLogout({ setLoggedIn, setJson });
     const handleClick = () => {
         logout();
     }
+
+    console.log(json);
+
     return (
         <header>
             <div className="container">
@@ -13,16 +16,17 @@ const Navbar = ({ setLoggedIn, setJson, loggedIn }) => {
                     <h1>Workout Buddy</h1>
                 </Link>
                 <nav>
-                    <div>
+                    {loggedIn && <div>
+                        <span>{json.email}</span>
                         <button onClick={handleClick}>Log out</button>
-                    </div>
-                    <div>
+                    </div>}
+                    {!loggedIn && <div>
                         <Link to="/login">Login</Link>
                         <Link to="/signup">Signup</Link>
-                    </div>
+                    </div>}
                 </nav>
-            </div>
-        </header>
+            </div >
+        </header >
     );
 }
 
