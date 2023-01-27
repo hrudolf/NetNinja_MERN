@@ -23,8 +23,10 @@ const Home = ({ user }) => {
 
         if (user) {
             fetchWorkouts()
+        } else {
+            setWorkouts(null);
         }
-    }, [])
+    }, [user])
 
     return (
         <div className="home">
